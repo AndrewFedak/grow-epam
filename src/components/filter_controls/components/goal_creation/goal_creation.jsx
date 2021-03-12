@@ -3,25 +3,30 @@ import React from 'react';
 const GoalCreation = (props) => {
     const {
         showGoalCreation,
-        toggleAddGoal,
+        addGoal,
+        discardGoalCreation,
         changeGoalTitle,
         goalTitle,
         createGoal
     } = props;
 
     return (
-        <div>
+        <div className='goal-creation'>
             {showGoalCreation ? (
-                <div>
+                <>
                     <input
                         type='text'
+                        className='add-goal-area'
                         placeholder='Type a goal'
                         onChange={(e) => changeGoalTitle(e.target.value)}
+                        value={goalTitle}
                     />
-                    <button disabled={!goalTitle.length} onClick={() => createGoal()}>Create</button>
-                    <button onClick={() => toggleAddGoal()}>Discard</button>
-                </div>
-            ) : <button onClick={() => toggleAddGoal()}>AddGoal</button>}
+                    <div className='actions'>
+                        <button disabled={!goalTitle.length} onClick={() => createGoal()}>✓</button>
+                        <button onClick={() => discardGoalCreation()}>✕</button>
+                    </div>
+                </>
+            ) : <button onClick={() => addGoal()} className='add-goal'>ADD GOAL</button>}
         </div>
     )
 };

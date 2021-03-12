@@ -7,11 +7,14 @@ const Filters = (props) => {
     } = props;
 
     return (
-        <div>
+        <>
             {showFilters ? (
                 <button onClick={() => toggleFilters()}>hide filters</button>
             ) : <button onClick={() => toggleFilters()}>show filters</button>}
-        </div>
+            <button>Add group</button>
+            <p>View by:</p>
+            <select>group</select>
+        </>
     )
 }
 

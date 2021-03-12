@@ -26,10 +26,12 @@ const store = createStore(
 
 const Root = () => {
   return (
-    <Provider store={store}>
-      <FilterControls />
-      <GoalCategories />
-    </Provider>
+    <div className='main'>
+      <Provider store={store}>
+        <FilterControls />
+        <GoalCategories />
+      </Provider>
+    </div>
   );
 }
 

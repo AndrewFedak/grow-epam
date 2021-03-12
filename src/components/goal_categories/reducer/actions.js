@@ -3,9 +3,19 @@ import {actionConstants as filterActionConstants} from '../../filter_controls/re
 
 const createGoal = () => (dispatch, getState) => {
     dispatch({type: actionConstants.CREATE_GOAL, payload: getState().filterControls.goalTitle});
-    dispatch({type: filterActionConstants.TOGGLE_ADD_GOAL});
+    dispatch({type: filterActionConstants.DISCARD_GOAL_CREATION});
 };
 
+const toggleCollapseGoal = (categoryId, goalId) => (dispatch) => {
+    dispatch({type: actionConstants.TOGGLE_COLLAPSE_GOAL, payload: {categoryId, goalId}})
+}
+
+const toggleCollapseCategory = (categoryId) => (dispatch) => {
+    dispatch({type: actionConstants.TOGGLE_COLLAPSE_CATEGORY, payload: categoryId})
+}
+
 export {
-    createGoal
+    createGoal,
+    toggleCollapseGoal,
+    toggleCollapseCategory
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {toggleAddGoal, toggleFilters, changeGoalTitle} from './reducer/actions';
+import {addGoal, discardGoalCreation, toggleFilters, changeGoalTitle} from './reducer/actions';
 import {createGoal} from '../goal_categories/reducer/actions';
 
 import GoalCreation from './components/goal_creation/goal_creation';
@@ -11,7 +11,8 @@ const FilterControls = (props) => {
     const {
         showGoalCreation,
         showFilters,
-        toggleAddGoal,
+        addGoal,
+        discardGoalCreation,
         toggleFilters,
         changeGoalTitle,
         createGoal,
@@ -20,10 +21,11 @@ const FilterControls = (props) => {
     } = props;
 
     return (
-        <div>
+        <div className='filter-controls'>
             <GoalCreation
                 showGoalCreation={showGoalCreation}
-                toggleAddGoal={toggleAddGoal}
+                addGoal={addGoal}
+                discardGoalCreation={discardGoalCreation}
                 changeGoalTitle={changeGoalTitle}
                 goalTitle={goalTitle}
                 createGoal={createGoal}
@@ -44,7 +46,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        toggleAddGoal,
+        addGoal,
+        discardGoalCreation,
         toggleFilters,
         changeGoalTitle,
         createGoal

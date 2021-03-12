@@ -1,33 +1,15 @@
-import {actionConstants, goalStatuses, labelColors} from './constants';
-
-const generateNewGoal = (title) => ({
-    title,
-    actionItems: [],
-    labelColor: labelColors[3],
-    status: goalStatuses['Planned'],
-    id: Date.now()
-});
-
-const appendNewGoal = (categories, newGoal) => {
-    const [categoryName, value] = Object.entries(categories)[0];
-    return {
-        ...categories,
-        [categoryName]: {
-            ...categories[categoryName],
-            goals: [...value.goals, newGoal],
-            isCollapsed: false
-        }
-    }
-}
+import {actionConstants} from './constants';
+import {appendNewGoal, generateNewGoal, toggleCollapseGoal, toggleCollapseCategory} from './helper';
 
 const initialState = {
-    categories: {
-        'Unsorted': {
+    categories: [
+        {
+            categoryName: 'Unsorted',
             isCollapsed: true,
             goals: [],
             id: Date.now()
         }
-    }
+    ]
 }
 
 const GoalCategoriesReducer = (state = initialState, action) => {
@@ -38,6 +20,10 @@ const GoalCategoriesReducer = (state = initialState, action) => {
                 ...state,
                 categories: appendNewGoal(state.categories, newGoal)
             };
+        case actionConstants.TOGGLE_COLLAPSE_GOAL:
+            return toggleCollapseGoal(state, action.payload)
+        case actionConstants.TOGGLE_COLLAPSE_CATEGORY:
+            return toggleCollapseCategory(state, action.payload)
         default:
             return state
     }

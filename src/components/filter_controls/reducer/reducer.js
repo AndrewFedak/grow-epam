@@ -8,11 +8,17 @@ const initialState = {
 
 const GoalCreationReducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionConstants.TOGGLE_ADD_GOAL:
+        case actionConstants.ADD_GOAL:
             return {
                 ...state,
                 showFilters: false,
-                showGoalCreation: !state.showGoalCreation
+                showGoalCreation: true
+            };
+        case actionConstants.DISCARD_GOAL_CREATION:
+            return {
+                ...state,
+                goalTitle: '',
+                showGoalCreation: false
             };
         case actionConstants.TOGGLE_FILTERS:
             return {

@@ -1,0 +1,47 @@
+.filter-controls {
+    display: flex;
+    align-items: center;
+    .goal-creation {
+        position: relative;
+        display: flex;
+        width: 100%;
+        .add-goal {
+            background-color: #fff;
+            color: #249db0;
+            height: 38px;
+            width: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border-radius: 2rem;
+            outline: none;
+            border: transparent;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .add-goal-area {
+            width: 100%;
+            border-radius: 3px;
+            height: 38px;
+            border: none;
+            font-size: 14px;
+            padding: 0 65px 0 16px;
+            color: #666;
+        }
+        .actions {
+            button {
+                margin: 0 3px;
+                border-radius: 50%;
+                border: 1px black;
+                outline: none;
+            }
+            button:disabled {
+                cursor: not-allowed;
+            }
+            position: absolute;
+            right: 10px;
+            top: 9px;
+            margin: auto 0;
+        }
+    }
+}
