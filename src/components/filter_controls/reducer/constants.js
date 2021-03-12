@@ -1,0 +1,5 @@
+export const actionConstants = {
+    TOGGLE_ADD_GOAL: 'TOGGLE_ADD_GOAL',
+    TOGGLE_FILTERS: 'TOGGLE_FILTERS',
+    CHANGE_GOAL_TITLE: 'CHANGE_GOAL_TITLE'
+};
