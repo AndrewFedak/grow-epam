@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
-import GoalHeaderSelects from './goal_header_selects';
-
+import Select from '../../../reusable/select';
 import EditInput from '../../../reusable/edit_input';
 
 import {getGoalHeaderConfig} from '../../goal_categories/reducer/helper';
@@ -40,7 +39,7 @@ const GoalHeader = (props) => {
         }
     }
 
-    const headerGoalConfig = getGoalHeaderConfig(goal, selectsActions);
+    const selectsConfig = getGoalHeaderConfig(goal, selectsActions);
 
     return (
         <div className='goal-header'>
@@ -62,9 +61,7 @@ const GoalHeader = (props) => {
             )}
             </div>
             {isGoalCollapsed && <div>Add action item</div>}
-            <GoalHeaderSelects
-                headerGoalConfig={headerGoalConfig}
-            />
+            {selectsConfig.map((config, idx) => <Select {...config} key={idx}/>)}
         </div>
     )
 }
