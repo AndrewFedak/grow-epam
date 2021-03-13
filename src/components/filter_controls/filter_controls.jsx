@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import {addGoal, discardGoalCreation, toggleFilters, changeGoalTitle} from './reducer/actions';
 import {createGoal} from '../goal_categories/reducer/actions';
 

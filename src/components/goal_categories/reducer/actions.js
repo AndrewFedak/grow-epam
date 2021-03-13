@@ -6,16 +6,31 @@ const createGoal = () => (dispatch, getState) => {
     dispatch({type: filterActionConstants.DISCARD_GOAL_CREATION});
 };
 
-const toggleCollapseGoal = (categoryId, goalId) => (dispatch) => {
-    dispatch({type: actionConstants.TOGGLE_COLLAPSE_GOAL, payload: {categoryId, goalId}})
-}
-
 const toggleCollapseCategory = (categoryId) => (dispatch) => {
     dispatch({type: actionConstants.TOGGLE_COLLAPSE_CATEGORY, payload: categoryId})
 }
 
+const changeGoalStatus = (categoryId, goalId, status) => (dispatch) => {
+    dispatch({type: actionConstants.CHANGE_GOAL_STATUS, payload: {categoryId, goalId, status}})
+};
+
+const deleteGoal = (categoryId, goalId) => (dispatch) => {
+    dispatch({type: actionConstants.DELETE_GOAL, payload: {categoryId, goalId}})
+}
+
+const renameGoal = (categoryId, goalId, title) => (dispatch) => {
+    dispatch({type: actionConstants.RENAME_GOAL, payload: {categoryId, goalId, title}})
+}
+
+const changeTimestamp = (categoryId, goalId, name, value) => (dispatch) => {
+    dispatch({type: actionConstants.CHANGE_TIMESTAMP, payload: {categoryId, goalId, name, value}})
+}
+
 export {
     createGoal,
-    toggleCollapseGoal,
-    toggleCollapseCategory
+    renameGoal,
+    deleteGoal,
+    toggleCollapseCategory,
+    changeGoalStatus,
+    changeTimestamp
 }

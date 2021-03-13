@@ -1,12 +1,11 @@
-import {goalStatuses, labels} from './constants';
+import {goalStatuses, labels, moreActions} from './constants';
 
 const generateNewGoal = (title) => ({
     title,
     actionItems: [],
-    labelColor: labels[3],
+    label: labels[3],
     status: goalStatuses[0],
     id: Date.now(),
-    isCollapsed: true,
     goalDetails: {
         start: '',
         deadline: '',
@@ -16,39 +15,16 @@ const generateNewGoal = (title) => ({
     }
 });
 
-const appendNewGoal = (categories, newGoal) => {
+const appendNewGoal = (categories, title) => {
     const firstCategory = categories[0];
     return [
         {
             ...firstCategory,
-            goals: [...firstCategory.goals, newGoal],
+            goals: [...firstCategory.goals, generateNewGoal(title)],
             isCollapsed: false
         },
         ...categories.slice(1)
     ]
-}
-
-const toggleCollapseGoal = (state, {categoryId, goalId}) => {
-    const categoryIdx = state.categories.findIndex(category => category.id === +categoryId);
-    const goalIdx = state.categories[categoryIdx].goals.findIndex(goal => goal.id === +goalId);
-    return {
-        ...state,
-        categories: [
-            ...state.categories.slice(0, categoryIdx),
-            {
-                ...state.categories[categoryIdx],
-                goals: [
-                    ...state.categories[categoryIdx].goals.slice(0, goalIdx),
-                    {
-                        ...state.categories[categoryIdx].goals[goalIdx],
-                        isCollapsed: !state.categories[categoryIdx].goals[goalIdx].isCollapsed
-                    },
-                    ...state.categories[categoryIdx].goals.slice(goalIdx+1),
-                ]
-            },
-            ...state.categories.slice(categoryIdx+1),
-        ]
-    };
 }
 
 const toggleCollapseCategory = (state, categoryId) => {
@@ -66,9 +42,61 @@ const toggleCollapseCategory = (state, categoryId) => {
     };
 }
 
+const changeGoalProperty = (state, payload, propName) => {
+    return {
+        ...state,
+        categories: state.categories.map((category) => {
+            if(category.id !== +payload.categoryId) return category;
+            return {
+                ...category,
+                goals: category.goals.map((goal) => {
+                    if(goal.id !== +payload.goalId) return goal
+                    return {
+                        ...goal,
+                        [propName]: payload[propName]
+                    }
+                    
+                })
+            }
+            
+        })
+    };
+};
+
+const getGoalHeaderConfig = (goal, actions) => {
+    const {label, status} = goal;
+    return [
+        {
+            selectLabel: 'labelSelect',
+            selectHeader: ' ',
+            backgroundColor: label.backgroundColor,
+            options: labels,
+            className: 'labels',
+            type: 'multiselect'
+        },
+        {
+            selectLabel: 'statusSelect',
+            selectHeader: status.optionName.toUpperCase(),
+            backgroundColor: status.backgroundColor,
+            options: goalStatuses,
+            className: 'status',
+            type: 'select'
+        },
+        {
+            selectLabel: 'moreActions',
+            selectHeader: ':',
+            backgroundColor: 'transparent',
+            options: moreActions,
+            className: 'edit',
+            type: 'menu'
+        }
+    ].map((select) => ({...select, onAction: actions[select.selectLabel]}))
+}
+
 export {
     generateNewGoal,
     appendNewGoal,
-    toggleCollapseGoal,
-    toggleCollapseCategory
+    toggleCollapseCategory,
+    getGoalHeaderConfig,
+    changeGoalProperty
 }

@@ -1,51 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {toggleCollapseGoal, toggleCollapseCategory} from './reducer/actions';
 
-import Goal from './components/goal';
+import Category from './components/category';
 
 const GoalCategories = (props) => {
     const {
-        categories,
-        toggleCollapseGoal,
-        toggleCollapseCategory
+        categories
     } = props;
-
-    const renderGoals = (goals, categoryId) => {
-        return goals.map((goal) => (
-            <Goal
-                key={goal.id}
-                toggleCollapseGoal={() => toggleCollapseGoal(categoryId, goal.id)}
-                goal={goal}
-            />
-        ))
-    }
 
     return (
         <div className='goal-categories'>
-            {categories.map((category) => {
-                const {categoryName, isCollapsed, goals, id} = category;
-                return (
-                    <div key={id}>
-                        <p onClick={() => toggleCollapseCategory(id)}>{categoryName} || {goals.length}</p>
-                        {!isCollapsed && renderGoals(goals, id)}
-                    </div>
-                )
-            })}
+            {categories.map((category) => (
+                <Category category={category} key={category.id}/>
+            ))}
         </div>
     )
 };
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        toggleCollapseGoal,
-        toggleCollapseCategory
-    }, dispatch)
-}
 
 const mapStateToProps = (state) => ({
     categories: state.goalCategories.categories
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GoalCategories);
+export default connect(mapStateToProps)(GoalCategories);
