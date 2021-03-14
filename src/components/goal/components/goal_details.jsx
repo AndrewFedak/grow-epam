@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditInput from '../../../reusable/edit_input';
 
 import GoalDateTimestamps from './goal_date_timestamps';
 import GoalSuccessCriteria from './goal_success_criteria';
 
 const GoalDetails = (props) => {
     const {
-        goalDetails
+        goalDetails,
+        createCriteria
     } = props;
     
     const {successCriteria, attachments} = goalDetails;
+
+    const [isCreatingCriteria, toggleCriteriaCreating] = useState(false);
 
     return (
         <div className='goal-details'>
             <GoalDateTimestamps {...props}/>
             <hr />
-            <GoalSuccessCriteria
-                successCriteria={successCriteria}
-            />
+            <div className='criterias'>
+                <div className='criterias-title'>
+                    <p>success criteria</p>
+                    <button onClick={() => toggleCriteriaCreating(true)}>create criteria</button>
+                </div>
+                {successCriteria.map((criteria, idx) => (
+                    <GoalSuccessCriteria
+                        key={idx}
+                        criteria={criteria}
+                        {...props}
+                    />
+                ))}
+                {isCreatingCriteria && (
+                    <EditInput
+                        applyFieldName={(title) => createCriteria(title)}
+                        endEditing={() => toggleCriteriaCreating(false)}
+                        showActionButtons
+                    />
+                )}
+            </div>
             {attachments.map((criteria, idx) => (
                 <div>
                     123

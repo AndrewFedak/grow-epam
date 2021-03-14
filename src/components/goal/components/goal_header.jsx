@@ -49,7 +49,7 @@ const GoalHeader = (props) => {
             <div className='goal-title'>
             {isEditingName ? (
                 <EditInput
-                    renameField={(title) => renameGoal(title)}
+                    applyFieldName={(title) => renameGoal(title)}
                     endEditing={() => toggleEditingName(false)}
                     title={goal.title}
                 />

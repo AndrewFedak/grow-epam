@@ -5,25 +5,36 @@ import useOutsideClick from './clickOutside';
 const EditInput = (props) => {
     const {
         title,
-        renameField,
-        endEditing
+        applyFieldName,
+        endEditing,
+        showActionButtons
     } = props;
 
     const nameInputRef = useRef();
 
-    useOutsideClick(nameInputRef, () => {
+    const applyChanges = () => {
         if(nameInputRef.current.value.trim()) {
-            renameField(nameInputRef.current.value)
+            applyFieldName(nameInputRef.current.value)
             endEditing();
         }
-    })
+    }
+
+    useOutsideClick(nameInputRef, () => applyChanges());
 
     useEffect(() => {
         nameInputRef.current && nameInputRef.current.select()
     }, [])
 
     return (
-        <input type='text' ref={nameInputRef} defaultValue={title} />
+        <div className='edit'>
+            <input type='text' ref={nameInputRef} defaultValue={title} className='edit-input'/>
+            {showActionButtons && (
+                <>
+                    <button onClick={() => applyChanges()}>tick</button>
+                    <button onClick={() => endEditing()}>cross</button>
+                </>
+            )}
+        </div>
     )
 }
 

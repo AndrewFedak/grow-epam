@@ -15,6 +15,12 @@ const generateNewGoal = (title) => ({
     }
 });
 
+const generateNewCriteria = (title) => ({
+    title,
+    isCompleted: false,
+    id: Date.now()
+})
+
 const appendNewGoal = (categories, title) => {
     const firstCategory = categories[0];
     return [
@@ -98,5 +104,6 @@ export {
     appendNewGoal,
     toggleCollapseCategory,
     getGoalHeaderConfig,
-    changeGoalProperty
+    changeGoalProperty,
+    generateNewCriteria
 }

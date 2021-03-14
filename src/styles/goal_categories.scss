@@ -124,6 +124,30 @@
             }
             display: flex;
         }
+        .criterias {
+            &-title {
+                display: flex;
+                justify-content: space-between;
+            }
+            .success-criteria {
+                display: flex;
+                align-items: center;
+                &-title {
+                    width: 100%;
+                    margin: 0;
+                }
+                &-actions{
+                    display: flex;
+                }
+            }
+            .edit {
+                width: 100%;
+                display: flex;
+                &-input {
+                    width: 100%;
+                }
+            }
+        }
     }
 }
 

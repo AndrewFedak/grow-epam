@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 
-import {toggleCollapseCategory, changeGoalStatus, deleteGoal, renameGoal, changeTimestamp} from '../reducer/actions';
+import {toggleCollapseCategory, deleteGoal} from '../reducer/actions';
 
 import Goal from '../../goal/goal';
 
@@ -10,10 +10,7 @@ const Category = (props) => {
     const {
         category,
         toggleCollapseCategory,
-        changeGoalStatus,
         deleteGoal,
-        changeTimestamp,
-        renameGoal
     } = props;
 
     const {categoryName, isCollapsed, goals, id:categoryId} = category;
@@ -25,9 +22,6 @@ const Category = (props) => {
                 categoryId={categoryId}
                 goal={goal}
                 deleteGoal={() => deleteGoal(categoryId, goal.id)}
-                changeGoalStatus={changeGoalStatus}
-                renameGoal={renameGoal}
-                changeTimestamp={changeTimestamp}
             />
         ))
     }
@@ -45,10 +39,7 @@ const Category = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         toggleCollapseCategory,
-        changeGoalStatus,
-        deleteGoal,
-        renameGoal,
-        changeTimestamp
+        deleteGoal
     }, dispatch)
 }
 

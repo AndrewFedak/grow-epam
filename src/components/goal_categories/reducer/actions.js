@@ -26,11 +26,31 @@ const changeTimestamp = (categoryId, goalId, name, value) => (dispatch) => {
     dispatch({type: actionConstants.CHANGE_TIMESTAMP, payload: {categoryId, goalId, name, value}})
 }
 
+const renameCriteria = (categoryId, goalId, criteriaId, title) => (dispatch) => {
+    dispatch({type: actionConstants.RENAME_CRITERIA, payload: {categoryId, goalId, criteriaId, title}})
+}
+
+const deleteCriteria = (categoryId, goalId, criteriaId) => (dispatch) => {
+    dispatch({type: actionConstants.DELETE_CRITERIA, payload: {categoryId, goalId, criteriaId}})
+}
+
+const createCriteria = (categoryId, goalId, title) => (dispatch) => {
+    dispatch({type: actionConstants.CREATE_CRITERIA, payload: {categoryId, goalId, title}})
+}
+
+const toggleCriteriaСompletion = (categoryId, goalId, criteriaId) => (dispatch) => {
+    dispatch({type: actionConstants.TOGGLE_CRITERIA_COMPLETION, payload: {categoryId, goalId, criteriaId}})
+}
+
 export {
     createGoal,
     renameGoal,
     deleteGoal,
     toggleCollapseCategory,
     changeGoalStatus,
-    changeTimestamp
+    changeTimestamp,
+    renameCriteria,
+    deleteCriteria,
+    createCriteria,
+    toggleCriteriaСompletion
 }
