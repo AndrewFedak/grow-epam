@@ -6,8 +6,6 @@ import GoalDetails from './components/goal_details';
 import GoalHeader from './components/goal_header';
 
 import {
-    renameGoal,
-    changeGoalStatus,
     changeTimestamp,
     renameCriteria,
     deleteCriteria,
@@ -17,10 +15,7 @@ import {
 
 const Goal = (props) => {
     const {
-        categoryId,
         goal,
-        renameGoal,
-        changeGoalStatus,
         changeTimestamp,
         renameCriteria,
         deleteCriteria,
@@ -34,20 +29,18 @@ const Goal = (props) => {
     return (
         <div className='goal-wrapper'>
             <GoalHeader
-                {...props}
-                changeGoalStatus={(status) => changeGoalStatus(categoryId, goalId, status)}
-                renameGoal={(title) => renameGoal(categoryId, goalId, title)}
+                goal={goal}
                 isGoalCollapsed={isGoalCollapsed}
                 showHideGoal={showHideGoal}
             />
             {!isGoalCollapsed && (
                 <GoalDetails
                     goalDetails={goalDetails}
-                    changeTimestamp={(name, value) => changeTimestamp(categoryId, goalId, name, value)}
-                    renameCriteria={(criteriaId, title) => renameCriteria(categoryId, goalId, criteriaId, title)}
-                    deleteCriteria={(criteriaId) => deleteCriteria(categoryId, goalId, criteriaId)}
-                    createCriteria={(title) => createCriteria(categoryId, goalId, title)}
-                    toggleCriteriaСompletion={(criteriaId) => toggleCriteriaСompletion(categoryId, goalId, criteriaId)}
+                    changeTimestamp={(name, value) => changeTimestamp(goalId, name, value)}
+                    renameCriteria={(criteriaId, title) => renameCriteria(goalId, criteriaId, title)}
+                    deleteCriteria={(criteriaId) => deleteCriteria(goalId, criteriaId)}
+                    createCriteria={(title) => createCriteria(goalId, title)}
+                    toggleCriteriaСompletion={(criteriaId) => toggleCriteriaСompletion(goalId, criteriaId)}
                 />
             )}
             <ul>
@@ -59,8 +52,6 @@ const Goal = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        renameGoal,
-        changeGoalStatus,
         changeTimestamp,
         renameCriteria,
         deleteCriteria,

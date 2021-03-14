@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 
 import Select from '../../../reusable/select';
 import EditInput from '../../../reusable/edit_input';
 
 import {getGoalHeaderConfig} from '../../goal_categories/reducer/helper';
+import {changeGoalStatus, deleteGoal, renameGoal} from '../../goal_categories/reducer/actions';
+import { bindActionCreators } from 'redux';
 
 const GoalHeader = (props) => {
     const {
@@ -15,10 +18,12 @@ const GoalHeader = (props) => {
         isGoalCollapsed
     } = props;
 
+    const {id, status} = goal;
+
     const [isEditingName, toggleEditingName] = useState(false);
 
     const selectsActions = {
-        statusSelect: (status) => changeGoalStatus(status),
+        statusSelect: (status) => changeGoalStatus(id, status),
         moreActions: (actionName) => {
             switch(actionName) {
                 case 'EDIT_GOAL_NAME':
@@ -31,7 +36,7 @@ const GoalHeader = (props) => {
                     console.log('ARCHIVE_GOAL');
                     break;
                 case 'DELETE_GOAL':
-                    deleteGoal()
+                    deleteGoal(id)
                     break;
                 default:
                     break;
@@ -41,15 +46,23 @@ const GoalHeader = (props) => {
 
     const selectsConfig = getGoalHeaderConfig(goal, selectsActions);
 
+    const toggleGoalStatus = () => {
+        const newStatus = status.optionName === 'Done' ? 'Planned' : 'Done';
+        changeGoalStatus(id, newStatus)
+    }
     return (
         <div className='goal-header'>
             <div className='done-checkbox'>
-                <input type='checkbox' />
+                <input
+                    type='checkbox'
+                    checked={status.optionName === 'Done'}
+                    onChange={() => toggleGoalStatus()}
+                />
             </div>
             <div className='goal-title'>
             {isEditingName ? (
                 <EditInput
-                    applyFieldName={(title) => renameGoal(title)}
+                    applyFieldName={(title) => renameGoal(id, title)}
                     endEditing={() => toggleEditingName(false)}
                     title={goal.title}
                 />
@@ -66,4 +79,11 @@ const GoalHeader = (props) => {
     )
 }
 
-export default GoalHeader;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        deleteGoal,
+        changeGoalStatus,
+        renameGoal
+    }, dispatch)
+}
+export default connect(null, mapDispatchToProps)(GoalHeader);

@@ -1,7 +1,10 @@
 import {goalStatuses, labels, moreActions} from './constants';
 
-const generateNewGoal = (title) => ({
+const generateNewGoal = ({groupOrder, listOrder, title, categoryId}) => ({
     title,
+    categoryId,
+    groupOrder,
+    listOrder,
     actionItems: [],
     label: labels[3],
     status: goalStatuses[0],
@@ -21,18 +24,6 @@ const generateNewCriteria = (title) => ({
     id: Date.now()
 })
 
-const appendNewGoal = (categories, title) => {
-    const firstCategory = categories[0];
-    return [
-        {
-            ...firstCategory,
-            goals: [...firstCategory.goals, generateNewGoal(title)],
-            isCollapsed: false
-        },
-        ...categories.slice(1)
-    ]
-}
-
 const toggleCollapseCategory = (state, categoryId) => {
     const categoryIdx = state.categories.findIndex(category => category.id === +categoryId);
     return {
@@ -49,20 +40,14 @@ const toggleCollapseCategory = (state, categoryId) => {
 }
 
 const changeGoalProperty = (state, payload, propName) => {
+    const {goals} = state;
     return {
         ...state,
-        categories: state.categories.map((category) => {
-            if(category.id !== +payload.categoryId) return category;
+        goals: goals.map((goal) => {
+            if(goal.id !== +payload.goalId) return goal
             return {
-                ...category,
-                goals: category.goals.map((goal) => {
-                    if(goal.id !== +payload.goalId) return goal
-                    return {
-                        ...goal,
-                        [propName]: payload[propName]
-                    }
-                    
-                })
+                ...goal,
+                [propName]: payload[propName]
             }
             
         })
@@ -101,7 +86,6 @@ const getGoalHeaderConfig = (goal, actions) => {
 
 export {
     generateNewGoal,
-    appendNewGoal,
     toggleCollapseCategory,
     getGoalHeaderConfig,
     changeGoalProperty,

@@ -8,9 +8,18 @@ const toggleFilters = () => (dispatch) => dispatch({type: actionConstants.TOGGLE
 
 const changeGoalTitle = (title) => (dispatch) => dispatch({type: actionConstants.CHANGE_GOAL_TITLE, payload: title})
 
+const changeGoalCategory = (categoryId) => (dispatch) => dispatch({type: actionConstants.CHANGE_GOAL_CATEGORY, payload: +categoryId})
+
+const createGoal = (title, categoryId) => (dispatch) => {
+    dispatch({type: actionConstants.CREATE_GOAL, payload: {title, categoryId}});
+    dispatch({type: actionConstants.DISCARD_GOAL_CREATION});
+};
+
 export {
     addGoal,
     discardGoalCreation,
     toggleFilters,
-    changeGoalTitle
+    changeGoalTitle,
+    changeGoalCategory,
+    createGoal
 };

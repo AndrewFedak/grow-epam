@@ -2,26 +2,25 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 
-import {toggleCollapseCategory, deleteGoal} from '../reducer/actions';
+import {toggleCollapseCategory} from '../reducer/actions';
 
 import Goal from '../../goal/goal';
 
 const Category = (props) => {
     const {
         category,
-        toggleCollapseCategory,
-        deleteGoal,
+        goals,
+        toggleCollapseCategory
     } = props;
 
-    const {categoryName, isCollapsed, goals, id:categoryId} = category;
+    const {name, isCollapsed, id:categoryId} = category;
+    const filteredGoals = goals.filter(goal => goal.categoryId === +categoryId);
 
     const renderGoals = () => {
-        return goals.map((goal) => (
+        return filteredGoals.map((goal) => (
             <Goal
                 key={goal.id}
-                categoryId={categoryId}
                 goal={goal}
-                deleteGoal={() => deleteGoal(categoryId, goal.id)}
             />
         ))
     }
@@ -30,7 +29,7 @@ const Category = (props) => {
         <div key={categoryId}>
             <div
                 onClick={() => toggleCollapseCategory(categoryId)}
-            >{categoryName} || {goals.length}</div>
+            >{name} || {filteredGoals.length}</div>
             {!isCollapsed && renderGoals()}
         </div>
     )
@@ -38,8 +37,7 @@ const Category = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        toggleCollapseCategory,
-        deleteGoal
+        toggleCollapseCategory
     }, dispatch)
 }
 

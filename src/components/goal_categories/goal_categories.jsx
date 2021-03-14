@@ -2,23 +2,41 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Category from './components/category';
+import Goal from '../goal/goal';
 
 const GoalCategories = (props) => {
     const {
-        categories
+        categories,
+        viewBy,
+        goals
     } = props;
+
+    const renderGoals = () => {
+        switch(viewBy) {
+            case 'groups':
+                return categories.map((category) => (
+                    <Category category={category} key={category.id} goals={goals}/>
+                ));
+            case 'freeList':
+                return goals.map((goal) => (
+                    <Goal {...props} goal={goal}/>
+                ))
+            default:
+                return <div>not found</div>
+        }
+    }
 
     return (
         <div className='goal-categories'>
-            {categories.map((category) => (
-                <Category category={category} key={category.id}/>
-            ))}
+            {renderGoals()}
         </div>
     )
 };
 
 const mapStateToProps = (state) => ({
-    categories: state.goalCategories.categories
+    categories: state.goalCategories.categories,
+    viewBy: state.goalCategories.viewBy,
+    goals: state.goalCategories.goals
 })
 
 export default connect(mapStateToProps)(GoalCategories);

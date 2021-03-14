@@ -3,7 +3,10 @@ import {actionConstants} from './constants';
 const initialState = {
     showGoalCreation: false,
     showFilters: false,
-    goalTitle: ''
+    goalCreation: {
+        title: '',
+        categoryId: null
+    }
 };
 
 const GoalCreationReducer = (state = initialState, action) => {
@@ -15,11 +18,7 @@ const GoalCreationReducer = (state = initialState, action) => {
                 showGoalCreation: true
             };
         case actionConstants.DISCARD_GOAL_CREATION:
-            return {
-                ...state,
-                goalTitle: '',
-                showGoalCreation: false
-            };
+            return initialState;
         case actionConstants.TOGGLE_FILTERS:
             return {
                 ...state,
@@ -29,7 +28,18 @@ const GoalCreationReducer = (state = initialState, action) => {
         case actionConstants.CHANGE_GOAL_TITLE:
             return {
                 ...state,
-                goalTitle: action.payload
+                goalCreation: {
+                    ...state.goalCreation,
+                    title: action.payload
+                },
+            };
+        case actionConstants.CHANGE_GOAL_CATEGORY:
+            return {
+                ...state,
+                goalCreation: {
+                    ...state.goalCreation,
+                    categoryId: action.payload
+                },
             };
         default:
             return state
