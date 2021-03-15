@@ -4,23 +4,24 @@ import useOutsideClick from './clickOutside';
 
 const Select = (props) => {
     const {
-        selectHeader,
         onAction,
-        backgroundColor,
+        modifiers,
         type,
         className,
         options,
     } = props;
 
-    const ref = useRef()
+    const ref = useRef();
 
     const [isMenuShown, showHideMenu] = useState(false);
 
+    const selectedOption = options.find((option) => modifiers[option.stateLabel]) || options[0];
+
     const classname = classNames(
         'select-header',
-        `select-header-${backgroundColor}`,
+        `select-header-${selectedOption.backgroundColor}`,
         {
-            [`select-header-${backgroundColor}-opened`]: isMenuShown
+            [`select-header-${selectedOption.backgroundColor}-opened`]: isMenuShown
         }
     )
 
@@ -29,43 +30,68 @@ const Select = (props) => {
     const renderSelect = () => {
         switch(type) {
             case 'multiselect':
-                return options.map((option, idx) => (
-                    <div className={'option option--' + option.backgroundColor}
-                        key={idx}
-                        onClick={() => onAction(option) || showHideMenu(false)}
-                    >{option.optionName}</div>
-                ));
+                return (
+                    <div className={'select-wrapper select-wrapper--' + className}>
+                        <button
+                            onClick={() => showHideMenu(!isMenuShown)}
+                            className={classname}
+                        >{selectedOption.selectedName}</button>
+                        {isMenuShown && (
+                            <div className='options' ref={ref}>
+                                {options.map((option, idx) => (
+                                    <div className={'option option--' + option.backgroundColor}
+                                        key={idx}
+                                        onClick={() => onAction(option.stateLabel) || showHideMenu(false)}
+                                    >{option.optionName}</div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )
             case 'select':
-                return options.map((option, idx) => (
-                    <div className={'option option--' + option.backgroundColor}
-                        key={idx}
-                        onClick={() => onAction(option) || showHideMenu(false)}
-                    >{option.optionName}</div>
-                ));
+                return (
+                    <div className={'select-wrapper select-wrapper--' + className}>
+                        <button
+                            onClick={() => showHideMenu(!isMenuShown)}
+                            className={classname}
+                        >{selectedOption.selectedName}</button>
+                        {isMenuShown && (
+                            <div className='options' ref={ref}>
+                                {options.map((option, idx) => (
+                                    <div className={'option option--' + option.backgroundColor}
+                                        key={idx}
+                                        onClick={() => onAction(option.stateLabel) || showHideMenu(false)}
+                                    >{option.optionName}</div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )
             case 'menu':
-                return options.map((option, idx) => (
-                    <div className={'option option--' + option.backgroundColor}
-                        key={idx}
-                        onClick={() => onAction(option.action) || showHideMenu(false)}
-                    >{option.optionName}</div>
-                ));
+                return (
+                    <div className={'select-wrapper select-wrapper--' + className}>
+                        <button
+                            onClick={() => showHideMenu(!isMenuShown)}
+                            className={classname}
+                        >:</button>
+                        {isMenuShown && (
+                        <div className='options' ref={ref}>
+                            {options.map((option, idx) => (
+                                <div className={'option option--' + option.backgroundColor}
+                                    key={idx}
+                                    onClick={() => onAction(option.action) || showHideMenu(false)}
+                                >{option.optionName}</div>
+                            ))}
+                        </div>)
+                        }
+                    </div>
+                )
             default:
                 return <div>not found</div>
         }
     };
 
-    return (
-        <div className={'select-wrapper select-wrapper--' + className}>
-            <button
-                onClick={() => showHideMenu(!isMenuShown)}
-                className={classname}
-            >{selectHeader}</button>
-            {isMenuShown && <div className='options' ref={ref}>
-                {renderSelect()}
-            </div>}
-        </div>
-    )
-    
+    return renderSelect()
 }
 
 export default Select;

@@ -19,7 +19,7 @@ const GoalCategories = (props) => {
                 ));
             case 'freeList':
                 return goals.map((goal) => (
-                    <Goal {...props} goal={goal}/>
+                    <Goal {...props} goal={goal} key={goal.id}/>
                 ))
             default:
                 return <div>not found</div>
@@ -35,7 +35,7 @@ const GoalCategories = (props) => {
 
 const mapStateToProps = (state) => ({
     categories: state.goalCategories.categories,
-    viewBy: state.goalCategories.viewBy,
+    viewBy: state.filterControls.viewBy,
     goals: state.goalCategories.goals
 })
 

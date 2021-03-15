@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import EditInput from '../../reusable/edit_input';
 
 import {
     addGoal,
@@ -8,7 +9,9 @@ import {
     toggleFilters,
     changeGoalTitle,
     changeGoalCategory,
-    createGoal
+    createGoal,
+    changeView,
+    createCategory
 } from './reducer/actions';
 
 const FilterControls = (props) => {
@@ -23,10 +26,14 @@ const FilterControls = (props) => {
         toggleFilters,
         changeGoalTitle,
         changeGoalCategory,
-        createGoal
+        createGoal,
+        changeView,
+        createCategory
     } = props;
 
-    const {title, categoryId} = goalCreation
+    const {title, categoryId} = goalCreation;
+
+    const [showGroupCreating, showHideGroupCreating] = useState(false);
 
     return (
         <div className='filter-controls'>
@@ -57,10 +64,22 @@ const FilterControls = (props) => {
                 {showFilters ? (
                     <button onClick={() => toggleFilters()}>hide filters</button>
                 ) : <button onClick={() => toggleFilters()}>show filters</button>}
-                <button>Add group</button>
-                <p>View by:</p>
-                <select>group</select>
+                <button onClick={() => showHideGroupCreating(!showGroupCreating)}>Add group</button>
+                <div>
+                    <p>View by:</p>
+                    <select onChange={(e) => changeView(e.target.value)}>
+                        <option value='groups'>Groups</option>
+                        <option value='freeList'>Free list</option>
+                    </select>
+                </div>
             </div>
+            {showGroupCreating && (
+                <EditInput
+                    applyFieldName={(categoryName) => createCategory(categoryName)}
+                    endEditing={() => showHideGroupCreating(false)}
+                    showActionButtons
+                />
+            )}
         </div>
     )
 };
@@ -79,7 +98,9 @@ const mapDispatchToProps = (dispatch) => {
         toggleFilters,
         changeGoalTitle,
         createGoal,
-        changeGoalCategory
+        changeGoalCategory,
+        changeView,
+        createCategory
     }, dispatch)
 }
 

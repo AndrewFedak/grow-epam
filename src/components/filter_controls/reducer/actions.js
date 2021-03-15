@@ -15,11 +15,21 @@ const createGoal = (title, categoryId) => (dispatch) => {
     dispatch({type: actionConstants.DISCARD_GOAL_CREATION});
 };
 
+const changeView = (viewBy) => (dispatch) => {
+    dispatch({type: actionConstants.CHANGE_VIEW, payload: viewBy})
+}
+
+const createCategory = (name) => (dispatch) => {
+    dispatch({type: actionConstants.CREATE_CATEGORY, payload: name})
+}
+
 export {
     addGoal,
     discardGoalCreation,
     toggleFilters,
     changeGoalTitle,
     changeGoalCategory,
-    createGoal
+    createGoal,
+    changeView,
+    createCategory
 };

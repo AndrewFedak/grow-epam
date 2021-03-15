@@ -4,7 +4,7 @@ import useOutsideClick from './clickOutside';
 
 const EditInput = (props) => {
     const {
-        title,
+        title = '',
         applyFieldName,
         endEditing,
         showActionButtons

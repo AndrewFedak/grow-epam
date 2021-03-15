@@ -1,5 +1,6 @@
 export const actionConstants = {
     CREATE_GOAL: 'CREATE_GOAL',
+    CREATE_CATEGORY: 'CREATE_CATEGORY',
     TOGGLE_COLLAPSE_GOAL: 'TOGGLE_COLLAPSE_GOAL',
     TOGGLE_COLLAPSE_CATEGORY: 'TOGGLE_COLLAPSE_CATEGORY',
     CHANGE_GOAL_STATUS: 'CHANGE_GOAL_STATUS',
@@ -34,19 +35,27 @@ export const labels = [
 export const goalStatuses = [
    {
     backgroundColor: 'blue',
-    optionName: 'Planned'
+    optionName: 'Planned',
+    selectedName: 'PLANNED',
+    stateLabel: 'planned'
    },
    {
     backgroundColor: 'blue',
-    optionName: 'In progress'
+    optionName: 'In progress',
+    selectedName: 'IN PROGRESS',
+    stateLabel: 'inProgress'
    },
    {
     backgroundColor: 'green',
-    optionName: 'Done'
+    optionName: 'Done',
+    selectedName: 'DONE',
+    stateLabel: 'done'
    },
    {
     backgroundColor: 'gray',
-    optionName: 'Canceled'
+    optionName: 'Canceled',
+    selectedName: 'CANCELED',
+    stateLabel: 'canceled'
    }
 ];
 

@@ -6,7 +6,8 @@ const initialState = {
     goalCreation: {
         title: '',
         categoryId: null
-    }
+    },
+    viewBy: 'groups'
 };
 
 const GoalCreationReducer = (state = initialState, action) => {
@@ -41,6 +42,11 @@ const GoalCreationReducer = (state = initialState, action) => {
                     categoryId: action.payload
                 },
             };
+        case actionConstants.CHANGE_VIEW:
+            return {
+                ...state,
+                viewBy: action.payload
+            }
         default:
             return state
     }

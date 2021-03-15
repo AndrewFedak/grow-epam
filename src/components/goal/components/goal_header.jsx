@@ -18,7 +18,7 @@ const GoalHeader = (props) => {
         isGoalCollapsed
     } = props;
 
-    const {id, status} = goal;
+    const {id, modifiers} = goal;
 
     const [isEditingName, toggleEditingName] = useState(false);
 
@@ -47,7 +47,7 @@ const GoalHeader = (props) => {
     const selectsConfig = getGoalHeaderConfig(goal, selectsActions);
 
     const toggleGoalStatus = () => {
-        const newStatus = status.optionName === 'Done' ? 'Planned' : 'Done';
+        const newStatus = modifiers.done ? 'planned' : 'done';
         changeGoalStatus(id, newStatus)
     }
     return (
@@ -55,7 +55,7 @@ const GoalHeader = (props) => {
             <div className='done-checkbox'>
                 <input
                     type='checkbox'
-                    checked={status.optionName === 'Done'}
+                    checked={modifiers.done}
                     onChange={() => toggleGoalStatus()}
                 />
             </div>
@@ -74,7 +74,7 @@ const GoalHeader = (props) => {
             )}
             </div>
             {isGoalCollapsed && <div>Add action item</div>}
-            {selectsConfig.map((config, idx) => <Select {...config} key={idx}/>)}
+            {selectsConfig.map((config, idx) => <Select {...goal} {...config} key={idx}/>)}
         </div>
     )
 }

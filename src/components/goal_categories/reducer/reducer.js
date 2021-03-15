@@ -1,22 +1,15 @@
 import {actionConstants} from './constants';
-import {generateNewGoal, toggleCollapseCategory, changeGoalProperty, generateNewCriteria} from './helper';
+import {generateNewGoal, toggleCollapseCategory, changeGoalProperty, generateNewCriteria, generateNewCategory} from './helper';
 
 const initialState = {
-    categories: [
-        {
-            name: 'Unsorted',
-            isCollapsed: true,
-            id: Date.now()
-        },
-        {
-            name: 'React.js',
-            isCollapsed: true,
-            id: Date.now()+1
-        }
-    ],
-    goals: [],
-    viewBy: 'groups'
+    categories: [],
+    goals: []
 }
+
+const initialModifiresState = {
+    closed: false,
+    done: false
+};
 
 const GoalCategoriesReducer = (state = initialState, action) => {
     const {type, payload} = action;
@@ -26,7 +19,7 @@ const GoalCategoriesReducer = (state = initialState, action) => {
             const listOrder = state.goals.length + 1;
             return {
                 ...state,
-                goals: [...state.goals, generateNewGoal({...payload, groupOrder, listOrder})], //payload = {categoryId, title}
+                goals: [...state.goals, generateNewGoal({...payload, groupOrder, listOrder})],
                 categories: state.categories.map(category => {
                     if(category.id !== +payload.categoryId) return category;
                     return {...category, isCollapsed: false}
@@ -35,7 +28,20 @@ const GoalCategoriesReducer = (state = initialState, action) => {
         case actionConstants.TOGGLE_COLLAPSE_CATEGORY:
             return toggleCollapseCategory(state, payload)
         case actionConstants.CHANGE_GOAL_STATUS:
-            return changeGoalProperty(state, payload, 'status')
+            return {
+                ...state,
+                goals: state.goals.map((goal) => {
+                    if(goal.id !== +payload.goalId) return goal
+                    return {
+                        ...goal,
+                        modifiers: {
+                            ...initialModifiresState,
+                            [payload.status]: true
+                        }
+                    }
+                    
+                })
+            };
         case actionConstants.DELETE_GOAL:
             return {
                 ...state,
@@ -106,7 +112,6 @@ const GoalCategoriesReducer = (state = initialState, action) => {
                 })
             }
         case actionConstants.TOGGLE_CRITERIA_COMPLETION:
-            console.log('toggled')
             return {
                 ...state,
                 goals: state.goals.map(goal => {
@@ -125,6 +130,11 @@ const GoalCategoriesReducer = (state = initialState, action) => {
                         }
                     }
                 })
+            }
+        case actionConstants.CREATE_CATEGORY:
+            return {
+                ...state,
+                categories: [...state.categories, generateNewCategory(payload)]
             }
         default:
             return state

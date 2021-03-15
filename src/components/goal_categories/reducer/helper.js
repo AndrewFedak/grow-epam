@@ -7,7 +7,10 @@ const generateNewGoal = ({groupOrder, listOrder, title, categoryId}) => ({
     listOrder,
     actionItems: [],
     label: labels[3],
-    status: goalStatuses[0],
+    modifiers: {
+        closed: false,
+        done: false
+    },
     id: Date.now(),
     goalDetails: {
         start: '',
@@ -21,6 +24,12 @@ const generateNewGoal = ({groupOrder, listOrder, title, categoryId}) => ({
 const generateNewCriteria = (title) => ({
     title,
     isCompleted: false,
+    id: Date.now()
+})
+
+const generateNewCategory = (name) => ({
+    name,
+    isCollapsed: true,
     id: Date.now()
 })
 
@@ -55,7 +64,7 @@ const changeGoalProperty = (state, payload, propName) => {
 };
 
 const getGoalHeaderConfig = (goal, actions) => {
-    const {label, status} = goal;
+    const {label, modifiers} = goal;
     return [
         {
             selectLabel: 'labelSelect',
@@ -67,9 +76,8 @@ const getGoalHeaderConfig = (goal, actions) => {
         },
         {
             selectLabel: 'statusSelect',
-            selectHeader: status.optionName.toUpperCase(),
-            backgroundColor: status.backgroundColor,
             options: goalStatuses,
+            modifiers: modifiers,
             className: 'status',
             type: 'select'
         },
@@ -89,5 +97,6 @@ export {
     toggleCollapseCategory,
     getGoalHeaderConfig,
     changeGoalProperty,
-    generateNewCriteria
+    generateNewCriteria,
+    generateNewCategory
 }
