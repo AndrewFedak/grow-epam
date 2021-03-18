@@ -7,19 +7,16 @@ const GoalSuccessCriteria = (props) => {
         deleteCriteria,
         renameCriteria,
         toggleCriteriaСompletion,
-        criteria
+        createCriteria,
+        goalDetails: {successCriteria}
     } = props;
 
-    const {
-        isCompleted,
-        title,
-        id:criteriaId,
-    } = criteria;
-
     const [isEditingCriteria, showHideEditing] = useState(false);
-    console.log(criteria);
-    return (
-        <div className='success-criteria'>
+
+    const [isCreatingCriteria, toggleCriteriaCreating] = useState(false);
+
+    const renderCriteria = ({isCompleted, title, id:criteriaId,}) => (
+        <div className='success-criteria' key={criteriaId}>
             <input type='checkbox' checked={isCompleted} onChange={() => toggleCriteriaСompletion(criteriaId)}/>
             {isEditingCriteria ? (
                 <EditInput
@@ -36,6 +33,23 @@ const GoalSuccessCriteria = (props) => {
                         <button onClick={() => deleteCriteria(criteriaId)}>🗑</button>
                     </div>
                 </>
+            )}
+        </div>
+    )
+
+    return (
+        <div className='criterias'>
+            <div className='criterias-title'>
+                <p>success criteria</p>
+                <button onClick={() => toggleCriteriaCreating(true)}>create criteria</button>
+            </div>
+            {successCriteria.map(renderCriteria)}
+            {isCreatingCriteria && (
+                <EditInput
+                    applyFieldName={(title) => createCriteria(title)}
+                    endEditing={() => toggleCriteriaCreating(false)}
+                    showActionButtons
+                />
             )}
         </div>
     )

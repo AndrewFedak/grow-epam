@@ -11,7 +11,7 @@ import {
     deleteCriteria,
     createCriteria,
     toggleCriteriaСompletion
-} from '../goal_categories/reducer/actions';
+} from '../dashboard/reducer/actions';
 
 const Goal = (props) => {
     const {

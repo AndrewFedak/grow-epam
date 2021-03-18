@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
 
-import GoalCategories from '../components/goal_categories/goal_categories';
-import FilterControls from '../components/goal_categories/components/filter_controls';
+import Dashboard from '../components/dashboard/dashboard';
+import FilterControls from '../components/dashboard/components/filter_controls';
 
 const Root = ({state}) => {
   useEffect(() => {
@@ -12,7 +12,7 @@ const Root = ({state}) => {
   return (
     <div className='main'>
         <FilterControls />
-        <GoalCategories />
+        <Dashboard />
     </div>
   );
 }

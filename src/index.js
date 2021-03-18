@@ -7,7 +7,7 @@ import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
 import root from './root/reducer/reducer';
-import dashboard from './components/goal_categories/reducer/reducer';
+import dashboard from './components/dashboard/reducer/reducer';
 
 const middlewares = [thunkMiddleware];
 

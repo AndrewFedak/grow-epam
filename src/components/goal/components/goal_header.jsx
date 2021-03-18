@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Select from '../../../reusable/select';
 import EditInput from '../../../reusable/edit_input';
 
-import {getGoalHeaderConfig} from '../../goal_categories/reducer/helper';
-import {changeGoalStatus, deleteGoal, renameGoal} from '../../goal_categories/reducer/actions';
-import { bindActionCreators } from 'redux';
+import {getGoalHeaderConfig} from '../../dashboard/reducer/helper';
+import {changeGoalStatus, deleteGoal, renameGoal} from '../../dashboard/reducer/actions';
 
 const GoalHeader = (props) => {
     const {
@@ -19,7 +19,6 @@ const GoalHeader = (props) => {
     } = props;
 
     const {id, modifiers} = goal;
-    console.log(goal)
 
     const [isEditingName, toggleEditingName] = useState(false);
 
@@ -48,9 +47,9 @@ const GoalHeader = (props) => {
     const selectsConfig = getGoalHeaderConfig(goal, selectsActions);
 
     const toggleGoalStatus = () => {
-        const newStatus = modifiers.done ? 'planned' : 'done';
-        changeGoalStatus(id, newStatus)
+        changeGoalStatus(id, modifiers.done ? 'planned' : 'done')
     }
+
     return (
         <div className='goal-header'>
             <div className='done-checkbox'>
