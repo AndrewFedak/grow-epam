@@ -36,36 +36,36 @@ const FilterControls = (props) => {
     const [showGroupCreating, showHideGroupCreating] = useState(false);
 
     return (
-        <div className='filter-controls'>
-            <div className='goal-creation'>
-                {showGoalCreation ? (
-                    <>
-                        <input
-                            type='text'
-                            className='add-goal-area'
-                            placeholder='Type a goal'
-                            onChange={(e) => changeGoalTitle(e.target.value)}
-                            value={title}
-                        />
-                        <div className='actions'>
-                            <button disabled={!title.length} onClick={() => createGoal(title, categoryId)}>✓</button>
-                            <button onClick={() => discardGoalCreation()}>✕</button>
-                        </div>
-                        <select onChange={(e) => changeGoalCategory(e.target.value)}>
-                            <option disabled selected></option>
-                            {categories.map(({id, name}) => (
-                                <option value={id} key={id}>{name}</option>
-                            ))}
-                        </select>
-                    </>
-                ) : <button onClick={() => addGoal()} className='add-goal'>ADD GOAL</button>}
-            </div>
-            <div>
+        <div>
+            <div className='filter-controls'>
+                <div className='goal-creation'>
+                    {showGoalCreation ? (
+                        <>
+                            <input
+                                type='text'
+                                className='add-goal-area'
+                                placeholder='Type a goal'
+                                onChange={(e) => changeGoalTitle(e.target.value)}
+                                value={title}
+                            />
+                            <div className='actions'>
+                                <button disabled={!title.length || !categoryId} onClick={() => createGoal(title, categoryId)}>✓</button>
+                                <button onClick={() => discardGoalCreation()}>✕</button>
+                            </div>
+                            <select onChange={(e) => changeGoalCategory(e.target.value)}>
+                                <option disabled selected></option>
+                                {categories.map(({id, name}) => (
+                                    <option value={id} key={id}>{name}</option>
+                                ))}
+                            </select>
+                        </>
+                    ) : <button onClick={() => addGoal()} className='add-goal'>ADD GOAL</button>}
+                </div>
                 {showFilters ? (
                     <button onClick={() => toggleFilters()}>hide filters</button>
                 ) : <button onClick={() => toggleFilters()}>show filters</button>}
                 <button onClick={() => showHideGroupCreating(!showGroupCreating)}>Add group</button>
-                <div>
+                <div className='view-by'>
                     <p>View by:</p>
                     <select onChange={(e) => changeView(e.target.value)}>
                         <option value='groups'>Groups</option>
