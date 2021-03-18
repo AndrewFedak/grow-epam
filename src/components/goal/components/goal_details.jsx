@@ -14,6 +14,8 @@ const GoalDetails = (props) => {
 
     const [isCreatingCriteria, toggleCriteriaCreating] = useState(false);
 
+    console.log('details');
+
     return (
         <div className='goal-details'>
             <GoalDateTimestamps {...props}/>

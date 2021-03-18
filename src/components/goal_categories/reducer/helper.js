@@ -53,12 +53,10 @@ const changeGoalProperty = (state, payload, propName) => {
     return {
         ...state,
         goals: goals.map((goal) => {
-            if(goal.id !== +payload.goalId) return goal
-            return {
-                ...goal,
-                [propName]: payload[propName]
+            if(goal.id === +payload.goalId) {
+                goal[propName] = payload[propName]
             }
-            
+            return goal
         })
     };
 };

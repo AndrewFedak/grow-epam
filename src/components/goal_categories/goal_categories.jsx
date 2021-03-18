@@ -34,9 +34,9 @@ const GoalCategories = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    categories: state.goalCategories.categories,
-    viewBy: state.filterControls.viewBy,
-    goals: state.goalCategories.goals
+    categories: state.dashboard.categories,
+    viewBy: state.dashboard.viewBy,
+    goals: state.dashboard.goals
 })
 
 export default connect(mapStateToProps)(GoalCategories);

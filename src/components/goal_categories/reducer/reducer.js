@@ -1,17 +1,32 @@
 import {actionConstants} from './constants';
 import {generateNewGoal, toggleCollapseCategory, changeGoalProperty, generateNewCriteria, generateNewCategory} from './helper';
 
-const initialState = {
-    categories: [],
-    goals: []
-}
-
-const initialModifiresState = {
+const initialModifiersState = {
     closed: false,
     done: false
 };
 
-const GoalCategoriesReducer = (state = initialState, action) => {
+const filterControlsInitialState = {
+    showGoalCreation: false,
+    showFilters: false,
+    goalCreation: {
+        title: '',
+        categoryId: null,
+    }
+}
+
+const goalCategoriesState = {
+    categories: [],
+    goals: [],
+    viewBy: 'groups'
+}
+
+const initialState = {
+    ...filterControlsInitialState,
+    ...goalCategoriesState
+}
+
+const DashboardReducer = (state = initialState, action) => {
     const {type, payload} = action;
     switch(type) {
         case actionConstants.CREATE_GOAL:
@@ -21,9 +36,12 @@ const GoalCategoriesReducer = (state = initialState, action) => {
                 ...state,
                 goals: [...state.goals, generateNewGoal({...payload, groupOrder, listOrder})],
                 categories: state.categories.map(category => {
-                    if(category.id !== +payload.categoryId) return category;
-                    return {...category, isCollapsed: false}
-                })
+                    if(category.id === +payload.categoryId) {
+                        category.isCollapsed = false
+                    }
+                    return category;
+                }),
+                ...filterControlsInitialState
             };
         case actionConstants.TOGGLE_COLLAPSE_CATEGORY:
             return toggleCollapseCategory(state, payload)
@@ -31,15 +49,14 @@ const GoalCategoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 goals: state.goals.map((goal) => {
-                    if(goal.id !== +payload.goalId) return goal
-                    return {
-                        ...goal,
-                        modifiers: {
-                            ...initialModifiresState,
+                    if(goal.id === +payload.goalId) {
+                        goal = Object.assign({}, goal);
+                        goal.modifiers = {
+                            ...initialModifiersState,
                             [payload.status]: true
                         }
                     }
-                    
+                    return goal;
                 })
             };
         case actionConstants.DELETE_GOAL:
@@ -53,82 +70,63 @@ const GoalCategoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 goals: state.goals.map(goal => {
-                    if(goal.id !== +payload.goalId) return goal;
-                    return {
-                        ...goal,
-                        goalDetails: {
-                            ...goal.goalDetails,
-                            [payload.name]: [payload.value]
-                        }
+                    if(goal.id === +payload.goalId) {
+                        goal.goalDetails[payload.name] = [payload.value]
                     }
+                    return goal;
                 })
             }
         case actionConstants.RENAME_CRITERIA:
             return {
                 ...state,
                 goals: state.goals.map(goal => {
-                    if(goal.id !== +payload.goalId) return goal;
-                    return {
-                        ...goal,
-                        goalDetails: {
-                            ...goal.goalDetails,
-                            successCriteria: goal.goalDetails.successCriteria.map(criteria => {
-                                if(criteria.id !== +payload.criteriaId) return criteria;
-                                return {
-                                    ...criteria,
-                                    title: payload.title
-                                }
-                            })
-                        }
+                    if(goal.id === +payload.goalId) {
+                        goal.goalDetails.successCriteria = goal.goalDetails.successCriteria.map(criteria => {
+                            if(criteria.id === +payload.criteriaId) {
+                                criteria.title = payload.title
+                            }
+                            return criteria;
+                        })
                     }
+                    return goal
                 })
             }
         case actionConstants.DELETE_CRITERIA:
             return {
                 ...state,
                 goals: state.goals.map(goal => {
-                    if(goal.id !== +payload.goalId) return goal;
-                    return {
-                        ...goal,
-                        goalDetails: {
-                            ...goal.goalDetails,
-                            successCriteria: goal.goalDetails.successCriteria.filter(criteria => criteria.id !== +payload.criteriaId)
-                        }
+                    if(goal.id === +payload.goalId) {
+                        goal = Object.assign({}, goal);
+                        goal.goalDetails.successCriteria = goal.goalDetails.successCriteria.filter(criteria => criteria.id !== +payload.criteriaId);
                     }
+                    return goal;
                 })
             }
         case actionConstants.CREATE_CRITERIA:
             return {
                 ...state,
                 goals: state.goals.map(goal => {
-                    if(goal.id !== +payload.goalId) return goal;
-                    return {
-                        ...goal,
-                        goalDetails: {
-                            ...goal.goalDetails,
-                            successCriteria: [...goal.goalDetails.successCriteria, generateNewCriteria(payload.title)]
-                        }
+                    if(goal.id === +payload.goalId) {
+                        goal.goalDetails.successCriteria = [...goal.goalDetails.successCriteria, generateNewCriteria(payload.title)]
                     }
+                    return goal;
                 })
             }
         case actionConstants.TOGGLE_CRITERIA_COMPLETION:
             return {
                 ...state,
                 goals: state.goals.map(goal => {
-                    if(goal.id !== +payload.goalId) return goal;
-                    return {
-                        ...goal,
-                        goalDetails: {
-                            ...goal.goalDetails,
-                            successCriteria: goal.goalDetails.successCriteria.map(criteria => {
-                                if(criteria.id !== +payload.criteriaId) return criteria;
-                                return {
-                                    ...criteria,
-                                    isCompleted: !criteria.isCompleted
-                                }
-                            })
-                        }
+                    if(goal.id === +payload.goalId) {
+                        goal = Object.assign({}, goal);
+                        goal.goalDetails.successCriteria = goal.goalDetails.successCriteria.map(criteria => {
+                            if(criteria.id !== +payload.criteriaId) return criteria;
+                            return {
+                                ...criteria,
+                                isCompleted: !criteria.isCompleted
+                            }
+                        })
                     }
+                    return goal;
                 })
             }
         case actionConstants.CREATE_CATEGORY:
@@ -136,9 +134,47 @@ const GoalCategoriesReducer = (state = initialState, action) => {
                 ...state,
                 categories: [...state.categories, generateNewCategory(payload)]
             }
+        case actionConstants.ADD_GOAL:
+            return {
+                ...state,
+                showFilters: false,
+                showGoalCreation: true
+            };
+        case actionConstants.DISCARD_GOAL_CREATION:
+            return {
+                ...state,
+                ...filterControlsInitialState
+            };
+        case actionConstants.TOGGLE_FILTERS:
+            return {
+                ...state,
+                showGoalCreation: false,
+                showFilters: !state.showFilters
+            };
+        case actionConstants.CHANGE_GOAL_TITLE:
+            return {
+                ...state,
+                goalCreation: {
+                    ...state.goalCreation,
+                    title: action.payload
+                },
+            };
+        case actionConstants.CHANGE_GOAL_CATEGORY:
+            return {
+                ...state,
+                goalCreation: {
+                    ...state.goalCreation,
+                    categoryId: action.payload
+                },
+            };
+        case actionConstants.CHANGE_VIEW:
+            return {
+                ...state,
+                viewBy: action.payload
+            }
         default:
             return state
     }
 };
 
-export default GoalCategoriesReducer;
+export default DashboardReducer;

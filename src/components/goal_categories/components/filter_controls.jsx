@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import EditInput from '../../reusable/edit_input';
+import EditInput from '../../../reusable/edit_input';
 
 import {
     addGoal,
@@ -12,7 +12,7 @@ import {
     createGoal,
     changeView,
     createCategory
-} from './reducer/actions';
+} from '../reducer/actions';
 
 const FilterControls = (props) => {
     const {
@@ -85,10 +85,10 @@ const FilterControls = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    showGoalCreation: state.filterControls.showGoalCreation,
-    showFilters: state.filterControls.showFilters,
-    goalCreation: state.filterControls.goalCreation,
-    categories: state.goalCategories.categories
+    showGoalCreation: state.dashboard.showGoalCreation,
+    showFilters: state.dashboard.showFilters,
+    goalCreation: state.dashboard.goalCreation,
+    categories: state.dashboard.categories
 })
 
 const mapDispatchToProps = (dispatch) => {

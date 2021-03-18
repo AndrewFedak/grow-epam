@@ -60,7 +60,10 @@ const Select = (props) => {
                                 {options.map((option, idx) => (
                                     <div className={'option option--' + option.backgroundColor}
                                         key={idx}
-                                        onClick={() => onAction(option.stateLabel) || showHideMenu(false)}
+                                        onClick={() => {
+                                            onAction(option.stateLabel)
+                                            showHideMenu(false)
+                                        }}
                                     >{option.optionName}</div>
                                 ))}
                             </div>

@@ -1,38 +1,22 @@
-import React from 'react';
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
-
-import root from './reducer/reducer';
-import filterControls from '../components/filter_controls/reducer/reducer';
-import goalCategories from '../components/goal_categories/reducer/reducer';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux'
 
 import GoalCategories from '../components/goal_categories/goal_categories';
-import FilterControls from '../components/filter_controls/filter_controls';
+import FilterControls from '../components/goal_categories/components/filter_controls';
 
-const middlewares = [thunkMiddleware];
+const Root = ({state}) => {
+  useEffect(() => {
+    window.localStorage.setItem('grow', JSON.stringify(state))
+  }, [state])
 
-const initialState = {}
-
-const store = createStore(
-  combineReducers({
-    root,
-    filterControls,
-    goalCategories
-  }),
-  initialState,
-  applyMiddleware(...middlewares)
-);
-
-const Root = () => {
   return (
     <div className='main'>
-      <Provider store={store}>
         <FilterControls />
         <GoalCategories />
-      </Provider>
     </div>
   );
 }
 
-export default Root;
+const mapStateToProps = (state) => ({state})
+
+export default connect(mapStateToProps)(Root);

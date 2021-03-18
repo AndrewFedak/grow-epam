@@ -19,6 +19,7 @@ const GoalHeader = (props) => {
     } = props;
 
     const {id, modifiers} = goal;
+    console.log(goal)
 
     const [isEditingName, toggleEditingName] = useState(false);
 
