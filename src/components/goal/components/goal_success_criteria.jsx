@@ -15,7 +15,7 @@ const GoalSuccessCriteria = (props) => {
 
     const [isCreatingCriteria, toggleCriteriaCreating] = useState(false);
 
-    const renderCriteria = ({isCompleted, title, id:criteriaId,}) => (
+    const renderCriteria = ({isCompleted, title, id:criteriaId}) => (
         <div className='success-criteria' key={criteriaId}>
             <input type='checkbox' checked={isCompleted} onChange={() => toggleCriteriaСompletion(criteriaId)}/>
             {isEditingCriteria ? (

@@ -50,6 +50,11 @@ const GoalHeader = (props) => {
         changeGoalStatus(id, modifiers.done ? 'planned' : 'done')
     }
 
+    const toggleEditingGoalName = (e) => {
+        e.stopPropagation();
+        toggleEditingName(true)
+    }
+
     return (
         <div className='goal-header'>
             <div className='done-checkbox'>
@@ -67,14 +72,13 @@ const GoalHeader = (props) => {
                     title={goal.title}
                 />
             ) : (
-                <>
-                    <button onClick={() => toggleEditingName(true)}>✎</button>
-                    <span onClick={() => showHideGoal(!isGoalCollapsed)}>{goal.title}</span>
-                </>
+                <div onClick={() => showHideGoal(!isGoalCollapsed)} >
+                    <p>{goal.title}<button onClick={toggleEditingGoalName}>✎</button></p>
+                </div>
             )}
             </div>
             {isGoalCollapsed && <div>Add action item</div>}
-            {selectsConfig.map((config, idx) => <Select {...goal} {...config} key={idx}/>)}
+            {selectsConfig.map((config, idx) => <Select {...goal} isGoalCollapsed={isGoalCollapsed} {...config} key={idx}/>)}
         </div>
     )
 }

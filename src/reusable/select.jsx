@@ -9,6 +9,7 @@ const Select = (props) => {
         type,
         className,
         options,
+        isGoalCollapsed
     } = props;
 
     const ref = useRef();
@@ -21,7 +22,7 @@ const Select = (props) => {
         'select-header',
         `select-header-${selectedOption.backgroundColor}`,
         {
-            [`select-header-${selectedOption.backgroundColor}-opened`]: isMenuShown
+            [`select-header-${selectedOption.backgroundColor}-opened`]: (isMenuShown || !isGoalCollapsed)
         }
     )
 

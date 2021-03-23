@@ -18,10 +18,11 @@ const GoalCategories = (props) => {
         const {name, isCollapsed, id:categoryId} = category;
         const filteredGoals = goals.filter(goal => goal.categoryId === +categoryId);
         return (
-            <div key={categoryId}>
+            <div key={categoryId} className='category'>
                 <div
                     onClick={() => toggleCollapseCategory(categoryId)}
-                >{name} || {filteredGoals.length}</div>
+                    className='category-name'
+                ><p>{name} - {filteredGoals.length}</p><div className='cross-line'/><i className='delete-category'>&#10007;</i></div>
                 {!isCollapsed && filteredGoals.map((goal) => <Goal key={goal.id} goal={goal}/>)}
             </div>
         )

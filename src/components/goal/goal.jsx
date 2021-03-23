@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 
 import GoalDetails from './components/goal_details';
 import GoalHeader from './components/goal_header';
@@ -23,11 +24,21 @@ const Goal = (props) => {
         toggleCriteriaСompletion
     } = props;
 
-    const {actionItems, id:goalId, goalDetails} = goal;
+    const {actionItems, id:goalId, goalDetails, modifiers} = goal;
     const [isGoalCollapsed, showHideGoal] = useState(true);
 
+    const goalClasses = classNames(
+        'goal',
+        {
+            'goal-opened': !isGoalCollapsed,
+            'goal--canceled': modifiers.canceled,
+            'goal--done': modifiers.done,
+            'goal--planned_inprogress': !modifiers.canceled && !modifiers.done
+        }
+    )
+
     return (
-        <div className='goal-wrapper'>
+        <div className={goalClasses}>
             <GoalHeader
                 goal={goal}
                 isGoalCollapsed={isGoalCollapsed}

@@ -65,7 +65,7 @@ const getGoalHeaderConfig = (goal, actions) => {
     const {label, modifiers} = goal;
     return [
         {
-            selectLabel: 'labelSelect',
+            actionsType: 'labelSelect',
             selectHeader: ' ',
             backgroundColor: label.backgroundColor,
             options: labels,
@@ -73,21 +73,21 @@ const getGoalHeaderConfig = (goal, actions) => {
             type: 'multiselect'
         },
         {
-            selectLabel: 'statusSelect',
+            actionsType: 'statusSelect',
             options: goalStatuses,
             modifiers: modifiers,
             className: 'status',
             type: 'select'
         },
         {
-            selectLabel: 'moreActions',
+            actionsType: 'moreActions',
             selectHeader: ':',
             backgroundColor: 'transparent',
             options: moreActions,
             className: 'edit',
             type: 'menu'
         }
-    ].map((select) => ({...select, onAction: actions[select.selectLabel]}))
+    ].map((select) => ({...select, onAction: actions[select.actionsType]}))
 }
 
 export {
