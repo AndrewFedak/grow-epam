@@ -7,7 +7,8 @@ const EditInput = (props) => {
         title = '',
         applyFieldName,
         endEditing,
-        showActionButtons
+        showActionButtons,
+        placeholder
     } = props;
 
     const nameInputRef = useRef();
@@ -27,11 +28,11 @@ const EditInput = (props) => {
 
     return (
         <div className='edit'>
-            <input type='text' ref={nameInputRef} defaultValue={title} className='edit-input'/>
+            <input type='text' ref={nameInputRef} defaultValue={title} className='edit-input' placeholder={placeholder} />
             {showActionButtons && (
                 <>
-                    <button onClick={() => applyChanges()}>tick</button>
-                    <button onClick={() => endEditing()}>cross</button>
+                    <button onClick={() => applyChanges()}>✓</button>
+                    <button onClick={() => endEditing()}>✕</button>
                 </>
             )}
         </div>

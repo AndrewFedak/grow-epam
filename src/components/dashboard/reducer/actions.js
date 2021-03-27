@@ -2,6 +2,8 @@ import {actionConstants} from './constants';
 
 const toggleCollapseCategory = (categoryId) => ({type: actionConstants.TOGGLE_COLLAPSE_CATEGORY, payload: categoryId})
 
+const deleteCategory = (categoryId) => ({type: actionConstants.DELETE_CATEGORY, payload: categoryId})
+
 const changeGoalStatus = (goalId, status) => ({type: actionConstants.CHANGE_GOAL_STATUS, payload: {goalId, status}})
 
 const deleteGoal = (goalId) => ({type: actionConstants.DELETE_GOAL, payload: {goalId}})
@@ -51,5 +53,6 @@ export {
     changeGoalCategory,
     createGoal,
     changeView,
-    createCategory
+    createCategory,
+    deleteCategory
 }

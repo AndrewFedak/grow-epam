@@ -13,7 +13,6 @@ const GoalDetails = (props) => {
     return (
         <div className='goal-details'>
             <GoalDateTimestamps {...props}/>
-            <hr />
             <GoalSuccessCriteria {...props}/>
             {attachments.map((criteria, idx) => (
                 <div>

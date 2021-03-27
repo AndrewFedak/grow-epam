@@ -45,6 +45,11 @@ const DashboardReducer = (state = initialState, action) => {
             };
         case actionConstants.TOGGLE_COLLAPSE_CATEGORY:
             return toggleCollapseCategory(state, payload)
+        case actionConstants.DELETE_CATEGORY:
+            return {
+                ...state,
+                categories: state.categories.filter((category) => category.id !== payload)
+            }
         case actionConstants.CHANGE_GOAL_STATUS:
             return {
                 ...state,
@@ -81,6 +86,7 @@ const DashboardReducer = (state = initialState, action) => {
                 ...state,
                 goals: state.goals.map(goal => {
                     if(goal.id === +payload.goalId) {
+                        goal = Object.assign({}, goal);
                         goal.goalDetails.successCriteria = goal.goalDetails.successCriteria.map(criteria => {
                             if(criteria.id === +payload.criteriaId) {
                                 criteria.title = payload.title
