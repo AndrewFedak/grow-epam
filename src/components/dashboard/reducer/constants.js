@@ -24,64 +24,71 @@ export const actionConstants = {
 export const labels = [
    {
     backgroundColor: 'red',
-    optionName: 'Label 1'
+    name: 'Label 1'
    },
    {
     backgroundColor: 'yellow',
-    optionName: 'Label 2'
+    name: 'Label 2'
    },
    {
     backgroundColor: 'limegreen',
-    optionName: 'Label 3'
+    name: 'Label 3'
    }, 
    {
     backgroundColor: 'turquoise',
-    optionName: 'Label 4'
+    name: 'Label 4'
    }
 ];
 
 export const goalStatuses = [
    {
-    backgroundColor: 'blue',
-    optionName: 'Planned',
-    selectedName: 'PLANNED',
+    className: 'planned',
+    name: 'Planned',
     stateLabel: 'planned'
    },
    {
-    backgroundColor: 'blue',
-    optionName: 'In progress',
-    selectedName: 'IN PROGRESS',
+    className: 'in-progress',
+    name: 'In progress',
     stateLabel: 'inProgress'
    },
    {
-    backgroundColor: 'green',
-    optionName: 'Done',
-    selectedName: 'DONE',
+    className: 'done',
+    name: 'Done',
     stateLabel: 'done'
    },
    {
-    backgroundColor: 'gray',
-    optionName: 'Canceled',
-    selectedName: 'CANCELED',
+    className: 'canceled',
+    name: 'Canceled',
     stateLabel: 'canceled'
    }
 ];
 
  export const moreActions = [
    {
-    optionName: 'Edit name',
+    name: 'Edit name',
     action: 'EDIT_GOAL_NAME'
    },
    {
-    optionName: 'Add action item',
+    name: 'Add action item',
     action: 'ADD_ACTION_ITEM'
    },
    {
-    optionName: 'Archive',
+    name: 'Archive',
     action: 'ARCHIVE_GOAL'
    },
    {
-    optionName: 'Delete',
+    name: 'Delete',
     action: 'DELETE_GOAL'
+   }
+]
+
+export const viewByOptions = [
+   {
+       name: 'Free list',
+       stateLabel: 'freeList'
+   },
+   {
+       name: 'Groups',
+       stateLabel: 'groups'
    }
 ]

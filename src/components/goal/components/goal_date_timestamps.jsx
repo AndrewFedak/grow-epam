@@ -4,14 +4,14 @@ import {timestampsConfig} from '../constants/configs';
 const GoalDateTimestamps = ({goalDetails, changeTimestamp}) => (
     <div className='goal-details-timestamps'>
         {timestampsConfig.map(({name, label}, idx) => (
-            <label key={idx}>{label}: 
+            <div key={idx} className={name}><div className={name+'-circle circle'}></div><span>{label}:</span> 
                 <input
                     type='date'
                     defaultValue={goalDetails[name]}
                     name={name}
                     onChange={({target : {name, value}}) => changeTimestamp(name, value)}
                 />
-            </label>
+            </div>
         ))}
     </div>
 )

@@ -1,3 +1,119 @@
+.select-wrapper{
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    &--view-by {
+        white-space: nowrap;
+    }
+    &--status {
+        min-width: 110px;
+        .select-header {
+            background-color: transparent;
+            border-radius: 15px;
+            outline: none;
+            margin: 0 0 0 auto;
+            text-transform: uppercase;
+            &-planned, &-in-progress {
+                color: #1a9cb0;
+                border: 1px solid #1a9cb0;
+                &:hover {
+                    background-color: rgba(26, 156, 176, 0.1);
+                }
+                &-opened {
+                    border-color: white;
+                    background-color: #1a9cb0;
+                    color: #fff;
+                    &:hover {
+                        background-color: #1a9cb0;
+                    }
+                }
+            }
+            &-done {
+                color: #a3c644;
+                border: 1px solid #a3c644;
+                &:hover {
+                    background-color: rgba(163, 198, 68, 0.1);
+                }
+                &-opened {
+                    background-color: #a3c644;
+                    border-color: white;
+                    color: #fff;
+                    &:hover {
+                        background-color: #a3c644;
+                    }
+                }
+            }
+            &-canceled {
+                color: #676766;
+                border: 1px solid #676766;
+                &:hover {
+                    background-color: rgba(103, 103, 102, 0.1);
+                }
+                &-opened {
+                    background-color: #676766;
+                    border-color: white;
+                    color: #fff;
+                    &:hover {
+                        background-color: #676766;
+                    }
+                }
+            }
+        }
+    }
+    &--menu {
+        button {
+            background-color: transparent;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            font-weight: bold;
+            &:focus {
+                background-color: #ebebeb;
+            }
+        }
+    }
+    &--labels {
+        button {
+            border: 0;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            outline: none;
+            &-turquoise {
+                background-color: turquoise;
+            }
+            &-yellow {
+                background-color: yellow;
+            }
+            &-green {
+                background-color: green;
+            }
+            &-red {
+                background-color: red;
+            }
+        }
+    }
+    .options {
+        z-index: 1500;
+        position: absolute;
+        right: 0;
+        top: 30px;
+        text-align: left;
+        background-color: #58585a;
+        border-radius: 3px;
+        min-width: 130px;
+        .option {
+            white-space: nowrap;
+            padding: 5px 15px;
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+                background-color: #666;
+            }
+        }
+    }
+}
+
 .dashboard {
     .category {
         &-name {
@@ -15,10 +131,16 @@
             }
         }
     }
+    
     .goal {
         &-opened {
             .goal-header {
-                color: #fff
+                color: #fff;
+                .edit {
+                    &-input {
+                        color: #fff;
+                    }
+                }
             }
         }
         &-opened.goal--done {
@@ -40,12 +162,18 @@
         &-header {
             display: flex;
             position: relative;
+            align-items: center;
             background-color: #fff;
-            color: #666;
             border: 1px solid #fff;
+            color: #666;
             border-radius: 2px;
             height: 30px;
             padding: 0 10px;
+            cursor: pointer;
+            &-icon {
+                width: 20px;
+                margin: 0 2px;
+            }
             &--done {
                 background-color: #a3c644;
                 color: #fff;
@@ -67,6 +195,7 @@
                     border: none;
                     background-color: transparent;
                     outline: none;
+                    padding: 0;
                 }
                 & > div {
                     width: 100%;
@@ -84,135 +213,51 @@
                     }
                 }
             }
-            
-            cursor: pointer;
             & > div {
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
             }
-            .select-wrapper{
-                position: relative;
-                margin: 0 5px;
-                &--status {
-                    min-width: 110px;
-                    .select-header {
-                        background-color: transparent;
-                        border-radius: 15px;
-                        outline: none;
-                        margin: 0 0 0 auto;
-                        &-blue {
-                            color: #1a9cb0;
-                            border: 1px solid #1a9cb0;
-                            &:hover {
-                                background-color: rgba(26, 156, 176, 0.1);
-                            }
-                            &-opened {
-                                border-color: white;
-                                background-color: #1a9cb0;
-                                color: #fff;
-                                &:hover {
-                                    background-color: #1a9cb0;
-                                }
-                            }
-                        }
-                        &-green {
-                            color: #a3c644;
-                            border: 1px solid #a3c644;
-                            &:hover {
-                                background-color: rgba(163, 198, 68, 0.1);
-                            }
-                            &-opened {
-                                background-color: #a3c644;
-                                border-color: white;
-                                color: #fff;
-                                &:hover {
-                                    background-color: #a3c644;
-                                }
-                            }
-                        }
-                        &-gray {
-                            color: #676766;
-                            border: 1px solid #676766;
-                            &:hover {
-                                background-color: rgba(103, 103, 102, 0.1);
-                            }
-                            &-opened {
-                                background-color: #676766;
-                                border-color: white;
-                                color: #fff;
-                                &:hover {
-                                    background-color: #676766;
-                                }
-                            }
-                        }
-                    }
-                }
-                &--edit {
-                    .select-header {
-                        background-color: transparent;
-                            border-radius: 50%;
-                            border: none;
-                            outline: none;
-                            &:focus {
-                                background-color: #ebebeb;
-                            }
-                    }
-                }
-                &--labels {
-                    .select-header {
-                        padding: 10px;
-                        border: 0;
-                        outline: none;
-                        &-turquoise {
-                            background-color: turquoise;
-                        }
-                        &-yellow {
-                            background-color: yellow;
-                        }
-                        &-green {
-                            background-color: green;
-                        }
-                        &-red {
-                            background-color: red;
-                        }
-                    }
-                }
-                cursor: pointer;
-            }
-            .options {
-                z-index: 1500;
-                position: absolute;
-                right: 0;
-                top: 30px;
-                text-align: left;
-                .option {
-                    white-space: nowrap;
-                    padding: 5px 15px;
-                    color: #fff;
-                    cursor: pointer;
-                    &:hover {
-                        background-color: #666;
-                    }
-                }
-                background-color: #58585a;
-                border-radius: 3px;
-                min-width: 130px;
-            }
         }
         &-details {
             background-color: #fff;
             &-timestamps {
-                label{
-                    margin-right: 20px;
-                }
-                padding: 40px 0 70px 10px;
+                padding: 20px 0 50px 10px;
                 display: flex;
+                div {
+                    display: flex;
+                    margin: 0 10px;
+                    align-items: center;
+                    .circle {
+                        margin-right: 4px;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                    }
+                    .start-circle {
+                        background: #39c2d7;
+                    }
+                    .deadline-circle {
+                        background: #ff9b19;;
+                    }
+                    .finish-circle {
+                        background: #a3c644;
+                    }
+                    input[type=date] {
+                        border: none;
+                    }
+                    span {
+                        margin: 0 3px;
+                    }
+                }
             }
             .criterias {
                 border-top: 1px solid #f0f0f0;
                 padding: 20px;
-                button {
+                .edit {
+                    margin: 5px 0 20px 0;
+                }
+                .success-criteria-actions button, .criterias-title button {
                     background-color: transparent;
                     border: none;
                     outline: none;
@@ -231,6 +276,7 @@
                 .success-criteria {
                     display: flex;
                     align-items: center;
+                    margin: 5px 0;
                     &-title {
                         width: 100%;
                         margin: 0;
@@ -245,15 +291,55 @@
                         }
                     }
                 }
-                .edit {
-                    width: 100%;
-                    display: flex;
-                    &-input {
-                        width: 100%;
-                    }
-                }
             }
         }
     }
 }
 
+.edit {
+    position: relative;
+    border-radius: 2px;
+    width: 100%;
+    &-input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        outline: none;
+        border: 1px solid lightblue;
+    }
+    .action-buttons {
+        display: flex;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+        button {
+            border-radius: 50%;
+            background-color: transparent;
+            padding-bottom: 3px;
+            margin: 0 3px;
+        }
+        .done {
+            border: 1px solid #b7d374;
+            color: #b7d374;
+            &:hover {
+                background-color: #b7d374;
+                color: #fff;
+            }
+            &:disabled {
+                color: #cccccc;
+                background-color: transparent;
+                border: 1px solid #cccccc;
+                cursor: not-allowed;
+            }
+        }
+        .cross {
+            border: 1px solid #f2a79e;
+            color: #f2a79e;
+            &:hover {
+                background-color: #f2a79e;
+                color: #fff
+            }
+        }
+    }
+}

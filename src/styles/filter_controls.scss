@@ -6,6 +6,7 @@
         position: relative;
         display: flex;
         width: 100%;
+        margin-right: 50px;
         .add-goal {
             background-color: #fff;
             color: #249db0;
@@ -20,34 +21,36 @@
             border: transparent;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
-        .add-goal-area {
-            width: 100%;
-            border-radius: 3px;
-            height: 38px;
-            border: none;
-            font-size: 14px;
-            padding: 0 65px 0 16px;
-            color: #666;
+        .edit {
+            margin: 0;
         }
-        .actions {
-            button {
-                margin: 0 3px;
-                border-radius: 50%;
-                border: 1px black;
-                outline: none;
-            }
-            button:disabled {
-                cursor: not-allowed;
-            }
-            position: absolute;
-            right: 85px;
-            top: 9px;
-            margin: auto 0;
+    }
+    .control-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 50%;
+        border: none;
+        width: 60px;
+        height: 45px;
+        cursor: pointer;
+        margin: 0 5px;
+        img {
+            width: 20px;
+            height: 20px;
         }
     }
     .view-by {
         p {
             white-space: nowrap;
+        }
+        button {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #1a9cb0;
         }
         display: flex;
         align-items: center;

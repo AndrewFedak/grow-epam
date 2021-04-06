@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import EditInput from '../../../reusable/edit_input';
+import {EditInput, Select} from '../../../reusable';
+import filter from '../../../images/filter.png';
+import addGroup from '../../../images/add-group.png';
 
 import {
     addGoal,
@@ -14,24 +16,27 @@ import {
     createCategory
 } from '../reducer/actions';
 
+import {viewByOptions} from '../reducer/constants';
+
 const FilterControls = (props) => {
     const {
         showGoalCreation,
         showFilters,
         goalCreation,
         categories,
+        viewBy,
 
         addGoal,
         discardGoalCreation,
         toggleFilters,
-        changeGoalTitle,
+        // changeGoalTitle,
         changeGoalCategory,
         createGoal,
         changeView,
         createCategory
     } = props;
 
-    const {title, categoryId} = goalCreation;
+    const {categoryId} = goalCreation; //title
 
     const [showGroupCreating, showHideGroupCreating] = useState(false);
 
@@ -41,17 +46,14 @@ const FilterControls = (props) => {
                 <div className='goal-creation'>
                     {showGoalCreation ? (
                         <>
-                            <input
-                                type='text'
-                                className='add-goal-area'
+                            <EditInput
+                                applyFieldName={(title) => createGoal(title, categoryId)}
+                                endEditing={() => discardGoalCreation()}
+                                isDisabled={!categoryId}
                                 placeholder='Type a goal'
-                                onChange={(e) => changeGoalTitle(e.target.value)}
-                                value={title}
+                                closeOnBlur={false}
+                                showActionButtons
                             />
-                            <div className='actions'>
-                                <button disabled={!title.length || !categoryId} onClick={() => createGoal(title, categoryId)}>✓</button>
-                                <button onClick={() => discardGoalCreation()}>✕</button>
-                            </div>
                             <select onChange={(e) => changeGoalCategory(e.target.value)}>
                                 <option disabled selected></option>
                                 {categories.map(({id, name}) => (
@@ -63,20 +65,25 @@ const FilterControls = (props) => {
                 </div>
                 {showFilters ? (
                     <button onClick={() => toggleFilters()}>hide filters</button>
-                ) : <button onClick={() => toggleFilters()}>show filters</button>}
-                <button onClick={() => showHideGroupCreating(!showGroupCreating)}>Add group</button>
+                ) : <button onClick={() => toggleFilters()} className='control-btn'><img src={filter} alt='filter' /></button>}
+                <button onClick={() => showHideGroupCreating(!showGroupCreating)} className='control-btn'>
+                    <img src={addGroup} alt='add-group'/>
+                </button>
                 <div className='view-by'>
                     <p>View by:</p>
-                    <select onChange={(e) => changeView(e.target.value)}>
-                        <option value='groups'>Groups</option>
-                        <option value='freeList'>Free list</option>
-                    </select>
+                    <Select
+                        className='view-by'
+                        selectedOption={viewByOptions.find(option => option.stateLabel === viewBy)}
+                        options={viewByOptions}
+                        onAction={(stateLabel) => changeView(stateLabel)}
+                    />
                 </div>
             </div>
             {showGroupCreating && (
                 <EditInput
                     applyFieldName={(categoryName) => createCategory(categoryName)}
                     endEditing={() => showHideGroupCreating(false)}
+                    placeholder='Type a group name'
                     showActionButtons
                 />
             )}
@@ -88,7 +95,8 @@ const mapStateToProps = (state) => ({
     showGoalCreation: state.dashboard.showGoalCreation,
     showFilters: state.dashboard.showFilters,
     goalCreation: state.dashboard.goalCreation,
-    categories: state.dashboard.categories
+    categories: state.dashboard.categories,
+    viewBy: state.dashboard.viewBy
 })
 
 const mapDispatchToProps = (dispatch) => {

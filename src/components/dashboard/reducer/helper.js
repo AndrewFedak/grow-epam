@@ -66,7 +66,6 @@ const getGoalHeaderConfig = (goal, actions) => {
     return [
         {
             actionsType: 'labelSelect',
-            selectHeader: ' ',
             backgroundColor: label.backgroundColor,
             options: labels,
             className: 'labels',
@@ -75,16 +74,15 @@ const getGoalHeaderConfig = (goal, actions) => {
         {
             actionsType: 'statusSelect',
             options: goalStatuses,
-            modifiers: modifiers,
+            selectedOption: goalStatuses.find((option) => modifiers[option.stateLabel]) || goalStatuses[0],
             className: 'status',
             type: 'select'
         },
         {
             actionsType: 'moreActions',
-            selectHeader: ':',
             backgroundColor: 'transparent',
             options: moreActions,
-            className: 'edit',
+            className: 'menu',
             type: 'menu'
         }
     ].map((select) => ({...select, onAction: actions[select.actionsType]}))

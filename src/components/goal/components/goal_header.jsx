@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Select from '../../../reusable/select';
 import EditInput from '../../../reusable/edit_input';
+import addActionItm from '../../../images/add-action-itm.png';
 
 import {getGoalHeaderConfig} from '../../dashboard/reducer/helper';
 import {changeGoalStatus, deleteGoal, renameGoal} from '../../dashboard/reducer/actions';
@@ -77,8 +78,8 @@ const GoalHeader = (props) => {
                 </div>
             )}
             </div>
-            {isGoalCollapsed && <div>Add action item</div>}
-            {selectsConfig.map((config, idx) => <Select {...goal} isGoalCollapsed={isGoalCollapsed} {...config} key={idx}/>)}
+            {isGoalCollapsed && <img src={addActionItm} alt='Add action item' className='goal-header-icon' />}
+            {selectsConfig.map((config, idx) => <Select {...goal} {...config} isGoalCollapsed={isGoalCollapsed} key={idx}/>)}
         </div>
     )
 }

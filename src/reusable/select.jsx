@@ -4,27 +4,17 @@ import useOutsideClick from './clickOutside';
 
 const Select = (props) => {
     const {
-        onAction,
-        modifiers,
         type,
         className,
+        selectedOption,
         options,
+        onAction,
         isGoalCollapsed
     } = props;
 
     const ref = useRef();
 
     const [isMenuShown, showHideMenu] = useState(false);
-
-    const selectedOption = options.find((option) => modifiers[option.stateLabel]) || options[0];
-
-    const classname = classNames(
-        'select-header',
-        `select-header-${selectedOption.backgroundColor}`,
-        {
-            [`select-header-${selectedOption.backgroundColor}-opened`]: (isMenuShown || !isGoalCollapsed)
-        }
-    )
 
     useOutsideClick(ref, () => isMenuShown && showHideMenu(false))
 
@@ -34,38 +24,15 @@ const Select = (props) => {
                 return (
                     <div className={'select-wrapper select-wrapper--' + className}>
                         <button
-                            onClick={() => showHideMenu(!isMenuShown)}
-                            className={classname}
-                        >{selectedOption.selectedName}</button>
+                            onClick={() => showHideMenu(!isMenuShown)}>
+                        </button>
                         {isMenuShown && (
                             <div className='options' ref={ref}>
                                 {options.map((option, idx) => (
                                     <div className={'option option--' + option.backgroundColor}
                                         key={idx}
                                         onClick={() => onAction(option.stateLabel) || showHideMenu(false)}
-                                    >{option.optionName}</div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                )
-            case 'select':
-                return (
-                    <div className={'select-wrapper select-wrapper--' + className}>
-                        <button
-                            onClick={() => showHideMenu(!isMenuShown)}
-                            className={classname}
-                        >{selectedOption.selectedName}</button>
-                        {isMenuShown && (
-                            <div className='options' ref={ref}>
-                                {options.map((option, idx) => (
-                                    <div className={'option option--' + option.backgroundColor}
-                                        key={idx}
-                                        onClick={() => {
-                                            onAction(option.stateLabel)
-                                            showHideMenu(false)
-                                        }}
-                                    >{option.optionName}</div>
+                                    >{option.name}</div>
                                 ))}
                             </div>
                         )}
@@ -76,22 +43,48 @@ const Select = (props) => {
                     <div className={'select-wrapper select-wrapper--' + className}>
                         <button
                             onClick={() => showHideMenu(!isMenuShown)}
-                            className={classname}
-                        >:</button>
+                        >⋮</button>
                         {isMenuShown && (
                         <div className='options' ref={ref}>
                             {options.map((option, idx) => (
-                                <div className={'option option--' + option.backgroundColor}
+                                <div className='option'
                                     key={idx}
                                     onClick={() => onAction(option.action) || showHideMenu(false)}
-                                >{option.optionName}</div>
+                                >{option.name}</div>
                             ))}
                         </div>)
                         }
                     </div>
                 )
             default:
-                return <div>not found</div>
+                const classname = classNames(
+                    'select-header',
+                    {
+                        [`select-header-${selectedOption.className}`]: selectedOption.className,
+                        [`select-header-${selectedOption.className}-opened`]: selectedOption.className && (isMenuShown || !isGoalCollapsed) 
+                    }
+                )
+                return (
+                    <div className={'select-wrapper select-wrapper--' + className}>
+                        <button
+                            onClick={() => showHideMenu(!isMenuShown)}
+                            className={classname}
+                        >{selectedOption.name}</button>
+                        {isMenuShown && (
+                            <div className='options' ref={ref}>
+                                {options.map((option, idx) => (
+                                    <div className='option'
+                                        key={idx}
+                                        onClick={() => {
+                                            onAction(option.stateLabel)
+                                            showHideMenu(false)
+                                        }}
+                                    >{option.name}</div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                );
         }
     };
 
